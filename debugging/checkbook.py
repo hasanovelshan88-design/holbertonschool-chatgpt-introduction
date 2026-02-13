@@ -2,34 +2,40 @@
 
 class Checkbook:
     """
-    A simple class to simulate a personal checkbook.
-    Allows deposits, withdrawals, and balance inquiries.
+    A simple Checkbook class to manage deposits, withdrawals, and balance.
+
+    Attributes:
+        balance (float): The current balance in the checkbook.
     """
 
     def __init__(self):
-        """
-        Initializes the Checkbook with a starting balance of $0.00.
-        """
+        """Initialize the checkbook with a zero balance."""
         self.balance = 0.0
 
     def deposit(self, amount):
         """
-        Adds a specified amount to the current balance.
+        Deposit money into the checkbook.
 
-        Parameters:
-        amount (float): The amount to deposit.
+        Args:
+            amount (float): The amount to deposit. Must be positive.
         """
+        if amount <= 0:
+            print("Deposit amount must be positive.")
+            return
         self.balance += amount
         print("Deposited ${:.2f}".format(amount))
         print("Current Balance: ${:.2f}".format(self.balance))
 
     def withdraw(self, amount):
         """
-        Subtracts a specified amount from the current balance if funds are sufficient.
+        Withdraw money from the checkbook.
 
-        Parameters:
-        amount (float): The amount to withdraw.
+        Args:
+            amount (float): The amount to withdraw. Must be positive and not exceed balance.
         """
+        if amount <= 0:
+            print("Withdrawal amount must be positive.")
+            return
         if amount > self.balance:
             print("Insufficient funds to complete the withdrawal.")
         else:
@@ -38,16 +44,14 @@ class Checkbook:
             print("Current Balance: ${:.2f}".format(self.balance))
 
     def get_balance(self):
-        """
-        Displays the current account balance.
-        """
+        """Print the current balance."""
         print("Current Balance: ${:.2f}".format(self.balance))
 
 
 def main():
     """
-    Main loop for user interaction with the Checkbook.
-    Supports deposit, withdraw, balance inquiry, and exit commands.
+    Main loop for the checkbook program.
+    Allows user to deposit, withdraw, check balance, or exit.
     """
     cb = Checkbook()
     while True:
@@ -59,17 +63,18 @@ def main():
                 amount = float(input("Enter the amount to deposit: $"))
                 cb.deposit(amount)
             except ValueError:
-                print("Invalid input. Please enter a numeric value.")
+                print("Invalid input. Please enter a number.")
         elif action.lower() == 'withdraw':
             try:
                 amount = float(input("Enter the amount to withdraw: $"))
                 cb.withdraw(amount)
             except ValueError:
-                print("Invalid input. Please enter a numeric value.")
+                print("Invalid input. Please enter a number.")
         elif action.lower() == 'balance':
             cb.get_balance()
         else:
             print("Invalid command. Please try again.")
+
 
 if __name__ == "__main__":
     main()
